@@ -65,7 +65,6 @@ speech.addEventListener('click', _=> {
 
 copy.onclick = () => {
  navigator.clipboard.writeText(translated_text.value);
- alert('copiado: '+translated_text.value);
 };
 
 select_first.value = default_first_language;
