@@ -7,6 +7,7 @@ const translated_text = document.querySelector('.translated_text');
 const change = document.getElementById('change');
 const read = document.querySelectorAll('.read');
 const speech = document.querySelector('.speech');
+const copy = document.querySelector('.copy');
 
 const default_first_language = 'en-GB';
 const default_second_language = 'es-ES';
@@ -61,6 +62,11 @@ recognition.onresult = (event) => {
 speech.addEventListener('click', _=> {
  recognition.start();
 });
+
+copy.onclick = () => {
+ navigator.clipboard.writeText(translated_text.value);
+ alert('copiado: '+translated_text.value);
+};
 
 select_first.value = default_first_language;
 select_second.value = default_second_language;

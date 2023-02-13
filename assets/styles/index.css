@@ -90,3 +90,22 @@ p.author a {
  font-weight: 500;
  color: #FFFFFF;
 }
+
+@media (max-width: 900px) {
+ .content > div {
+ width: 90%;
+ height: 50%;
+ }
+}
+
+@media (max-width: 767px) {
+ .content > div {
+ width: 95%;
+ height: 40%;
+ }
+
+ .content_textarea {
+  height: 110%;
+ }
+
+}
