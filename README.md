@@ -1,6 +1,6 @@
 # ㊗️ Translator
 
-![photo6](https://user-images.githubusercontent.com/54298536/218385251-0ad9ea29-9882-4cb3-953c-50afec802634.png)
+![image](https://user-images.githubusercontent.com/54298536/218522131-53ce8192-156b-44fe-b108-9e7d44e24f9b.png)
 
 
 # 🪐 Demo
