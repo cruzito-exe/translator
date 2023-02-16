@@ -5,7 +5,7 @@ const select_second = document.querySelector('.second');
 const original_text = document.querySelector('.original_text');
 const translated_text = document.querySelector('.translated_text');
 const change = document.getElementById('change');
-const read = document.querySelectorAll('.read');
+const listen = document.querySelectorAll('.listen');
 const speech = document.querySelector('.speech');
 const copy = document.querySelector('.copy');
 
@@ -43,12 +43,12 @@ original_text.addEventListener('keyup', async _=>{
 });
 
 
-read.forEach((read, index) => {
- read.addEventListener('click', _=> {
-  const text_to_read = index == 0 ? original_text.value : translated_text.value;
+listen.forEach((listen, index) => {
+    listen.addEventListener('click', _=> {
+  const text_to_listen = index == 0 ? original_text.value : translated_text.value;
 
-  if(!text_to_read) return
-  speechSynthesis.speak(new SpeechSynthesisUtterance(text_to_read))
+  if(!text_to_listen) return
+  speechSynthesis.speak(new SpeechSynthesisUtterance(text_to_listen))
  });
 });
 

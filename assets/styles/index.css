@@ -38,11 +38,16 @@ body {
 }
 
 .header select {
- border: 0;
- height: 50%;
- background: none;
+ height: 60%;
+ border: 1px solid #767676;
+ border-radius: 5px;
+ padding:5px;
  outline: none;
  cursor: pointer;
+}
+
+select::-ms-expand {
+ display: none;
 }
 
 .icon_btn {
@@ -52,6 +57,10 @@ body {
  padding: 3px;
  cursor: pointer;
  height: 50%;
+}
+
+.icon_btn:hover {
+ color: #000000A9;
 }
 
 .content_textarea {
@@ -74,6 +83,10 @@ textarea {
  background: #BCC5D4;
  border-radius: 10px;
  cursor: pointer;
+}
+
+.translated_text {
+ background: #F0F0F0;
 }
 
 p.author {
