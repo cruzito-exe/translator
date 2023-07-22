@@ -1,6 +1,7 @@
 # ㊗️ Translator
 
-![image]()
+![work5](https://github.com/cruzito-rar/translator_app/assets/54298536/f2db10c0-d669-4e7c-b226-d48f1a4dc9e0)
+
 
 
 # 🪐 Demo
