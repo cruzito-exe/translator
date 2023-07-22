@@ -1,6 +1,6 @@
 # ㊗️ Translator
 
-![image](https://user-images.githubusercontent.com/54298536/218522131-53ce8192-156b-44fe-b108-9e7d44e24f9b.png)
+![image]()
 
 
 # 🪐 Demo
@@ -18,7 +18,7 @@ cd translator_app
 
 # 🧑🏻‍💻 Technologies
 
-- [Vanilla JS](https://developer.mozilla.org/es/docs/Web/JavaScript)
+- [jQuery](https://jquery.com)
 - [Vercel](https://vercel.com/dashboard)
 
 # 🗃️ API

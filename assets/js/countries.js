@@ -98,4 +98,4 @@ const languages = [
  {'zu-ZA' : 'Zulu'}
 ]
  
-export default languages
+export default languages;

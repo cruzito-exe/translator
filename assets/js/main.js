@@ -1,71 +1,96 @@
 import countries from './countries.js';
 
-const select_first = document.querySelector('.first');
-const select_second = document.querySelector('.second');
-const original_text = document.querySelector('.original_text');
-const translated_text = document.querySelector('.translated_text');
-const change = document.getElementById('change');
-const listen = document.querySelectorAll('.listen');
-const speech = document.querySelector('.speech');
-const copy = document.querySelector('.copy');
+$(function () {
+ const select_first = $('.first');
+ const select_second = $('.second');
+ const original_text = $('.original_text');
+ const translated_text = $('.translated_text');
+ const change = $('#change');
+ const listen = $('.listen');
+ const speech = $('.speech');
+ const copy = $('.copy');
 
-const default_first_language = 'en-GB';
-const default_second_language = 'es-ES';
+ const default_first_language = 'en-GB';
+ const default_second_language = 'es-ES';
 
-for(const n in countries) {
- const key = Object.keys(countries[n]).toString();
- const value = Object.values(countries[n]).toString();
+ //Función para llenar los select con las opciones de países
+ function fillSelectOptions() {
+  $.each(countries, function (index, country) {
+   const key = Object.keys(country).toString();
+   const value = Object.values(country).toString();
 
- select_first.innerHTML += `<option value=${key}> ${value} </option>`
- select_second.innerHTML += `<option value=${key}> ${value} </option>`
-}
+   select_first.append(`<option value="${key}">${value}</option>`);
+   select_second.append(`<option value="${key}">${value}</option>`);
+  });
+ }
 
-change.addEventListener('click', _=> {
- const select_first_value = select_first.value;
- const original_text_value = original_text.value;
+ //Función para intercambiar el contenido de los campos de texto
+ function swapTextFields() {
+  const select_first_value = select_first.val();
+  const original_text_value = original_text.val();
 
- select_first.value = select_second.value;
- select_second.value = select_first_value;
+  select_first.val(select_second.val());
+  select_second.val(select_first_value);
 
- if(!translated_text.value) return
+  if (!translated_text.val()) return;
 
- original_text.value = translated_text.value;
- translated_text.value = original_text_value;
-});
+  original_text.val(translated_text.val());
+  translated_text.val(original_text_value);
+ }
 
-original_text.addEventListener('keyup', async _=>{
- if(!original_text.value) return
- 
- const translate = await fetch(`https://api.mymemory.translated.net/get?q=${original_text.value}&langpair=${select_first.value}|${select_second.value}`);
- const translated = await translate.json()
+ //Función para realizar la traducción
+ async function translateText() {
+  if (!original_text.val()) return;
 
- translated_text.value = translated.responseData.translatedText;
-});
+  try {
+   const translate = await fetch(`https://api.mymemory.translated.net/get?q=${original_text.val()}&langpair=${select_first.val()}|${select_second.val()}`);
+   const translated = await translate.json();
+   
+   translated_text.val(translated.responseData.translatedText);
+  } catch (error) {
+   console.error('Error during translation:', error);
+  }
+ }
 
+ //Función para activar la síntesis de voz
+ function speakText() {
+  const index = listen.index(this);
+  const text_to_listen = index == 0 ? original_text.val() : translated_text.val();
 
-listen.forEach((listen, index) => {
-    listen.addEventListener('click', _=> {
-  const text_to_listen = index == 0 ? original_text.value : translated_text.value;
+  if (!text_to_listen) return;
+   speechSynthesis.speak(new SpeechSynthesisUtterance(text_to_listen));
+  }
 
-  if(!text_to_listen) return
-  speechSynthesis.speak(new SpeechSynthesisUtterance(text_to_listen))
+ //Evento para intercambiar los idiomas
+ change.click(swapTextFields);
+
+ //Evento para traducir cuando se escribe en el campo de texto original
+ original_text.on('keyup', translateText);
+
+ //Evento para escuchar el texto con síntesis de voz
+ listen.click(speakText);
+
+ //Evento para escuchar el texto con el micrófono
+ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+ const recognition = new SpeechRecognition();
+
+ recognition.onresult = function (event) {
+  original_text.val(event.results[0][0].transcript);
+ };
+
+ speech.click(function () {
+  recognition.start();
  });
+
+ //Evento para copiar el texto traducido al portapapeles
+ copy.click(function () {
+  navigator.clipboard.writeText(translated_text.val());
+ });
+
+ //Rellenar los select con las opciones de países al cargar la página
+ fillSelectOptions();
+
+ //Establecer los valores por defecto para los select
+ select_first.val(default_first_language);
+ select_second.val(default_second_language);
 });
-
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-const recognition = new SpeechRecognition();
-
-recognition.onresult = (event) => {
- original_text.value = event.results[0][0].transcript;
-}
-
-speech.addEventListener('click', _=> {
- recognition.start();
-});
-
-copy.onclick = () => {
- navigator.clipboard.writeText(translated_text.value);
-};
-
-select_first.value = default_first_language;
-select_second.value = default_second_language;
